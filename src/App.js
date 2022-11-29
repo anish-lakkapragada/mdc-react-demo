@@ -1,23 +1,61 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Button, Input } from "@mantine/core";
-import { useState } from "react";
+import { Button, NumberInput } from "@mantine/core";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [x, setX] = useState(2);
+  const [min, setMin] = useState(5);
+  const [sec, setSec] = useState(0);
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (on) {
+        const tempSeconds = min * 60 + sec - 1;
+        setMin(Math.floor(tempSeconds / 60));
+        setSec(tempSeconds % 60);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [min, on, sec]);
+
   return (
     <div className="App">
-      <h1> React is Easy {x} </h1>
+      <h1> Timer Application </h1>
+      <h3>
+        {" "}
+        {min} minutes {sec}
+        {" seconds"} left
+      </h3>
+      <NumberInput
+        defaultValue={min}
+        placeholder="Enter Minutes"
+        label="Minutes"
+        withAsterisk
+        onChange={(value) => {
+          setMin(value);
+        }}
+      />
+      <NumberInput
+        defaultValue={sec}
+        placeholder="Enter Seconds"
+        label="Seconds"
+        withAsterisk
+        onChange={(newSec) => {
+          setSec(newSec);
+        }}
+      />
+
       <Button
+        className="button"
+        variant="gradient"
+        gradient={{ from: "teal", to: "lime", deg: 105 }}
         onClick={() => {
-          setX(x + 1);
+          setOn(true);
         }}
       >
-        {" "}
-        This is A Button{" "}
+        Start Timer!
       </Button>
-      <Input placeholder="Your Social Security Number" />
-      <p> React is a web framework to help style things. </p>
     </div>
   );
 }
