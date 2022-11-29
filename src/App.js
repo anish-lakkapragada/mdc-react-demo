@@ -51,10 +51,10 @@ function App() {
         variant="gradient"
         gradient={{ from: "teal", to: "lime", deg: 105 }}
         onClick={() => {
-          setOn(true);
+          setOn(!on);
         }}
       >
-        Start Timer!
+        {on ? "Stop Timer" : "Start Timer"}
       </Button>
     </div>
   );
