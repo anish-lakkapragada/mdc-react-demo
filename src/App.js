@@ -56,6 +56,7 @@ function App() {
       >
         {on ? "Stop Timer" : "Start Timer"}
       </Button>
+      <Button className="button" onClick={() => {setOn(false); setMin(5); setSec(0);}}> Reset Timer </Button> 
     </div>
   );
 }
